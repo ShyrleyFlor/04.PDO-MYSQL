@@ -16,10 +16,10 @@ class ControladorFormularios
         }
     }
     #seleccionar registro (listar)
-    static public function listaregistro()
+    static public function listaregistro($item, $valor)
     {
         $tabla = "registros";
-        $respuesta = ModeloFormularios::mdlListarRegistros($tabla, null, null);
+        $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
         return $respuesta;
     }
     #verificar si el usuario existe para permitir iniciar sesion
@@ -29,34 +29,68 @@ class ControladorFormularios
             $tabla = "registros";
             $item = "email";
             $valor = $_POST["ingresoEmail"];
-            #validar email
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
-            if (($respuesta["email"]) == $_POST["ingresoEmail"] && ($respuesta["password"])== $_POST["ingresoPassword"]) 
-            {
-                if($respuesta["password"] == $_POST["ingresoPassword"]){
-                    $_SESSION["validarIngreso"] = "ok";
-                    echo "<script>
+    
+            echo "Email: " . $_POST["ingresoEmail"] . "<br>";
+            echo "Contraseña: " . $_POST["ingresoPassword"] . "<br>";
+            echo "Contraseña almacenada: " . $respuesta["password"] . "<br>";
+    
+            if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"]) {
+                $_SESSION["validarIngreso"] = "ok";
+                echo "<script>
                     if(window.history.replaceState){
                         window.history.replaceState(null,null,window.location.href);
                     }
-                        window.location = 'index.php?pagina=inicio';
-    
-                    </script>";
-                    echo "<div class='alert alert-success'>Ingreso exitoso</div>";
-                } else {
-                    echo "<script>
+                    window.location = 'index.php?pagina=inicio';
+                </script>";
+                echo "<div class='alert alert-success'>Ingreso exitoso</div>";
+            } else {
+                echo "<script>
                     if(window.history.replaceState){
                         window.history.replaceState(null,null,window.location.href);
                     }
-    
-                    </script>";
-                    echo "<div class='alert alert-danger'>Error al iniciar sesion</div>";
-
-                    print_r($respuesta);
-                }
+                </script>";
+                echo "<div class='alert alert-danger'>Error al iniciar sesion</div>";
             }
         }
     }
 
+    #actualizar registro creamos el metodo
+    
+    public function CTRactualizar()
+    {
+        if (isset($_POST["actualizarNombre"])) {
+            if($_POST["actualizarPassword"] != ""){
+                $password = $_POST["actualizarPassword"];
+            }else{
+                $password = $_POST["passwordActual"];
+            }
+
+            $tabla = "registros";
+            $datos = array(
+                "id" => $_POST["id"],
+                "nombre" => $_POST["actualizarNombre"], 
+                "email" => $_POST["actualizarEmail"], 
+                "password" => $password
+            );
+
+            $respuesta = ModeloFormularios::mdlActualizar($tabla, $datos);
+            if($respuesta == "ok"){
+                echo "<script>
+                    if(window.history.replaceState){
+                        window.history.replaceState(null,null,window.location.href);
+                    }
+                </script>";
+                echo "<div class='alert alert-success'>Actualizado exitosamente</div>";
+            } else {
+                echo "<script>
+                    if(window.history.replaceState){
+                        window.history.replaceState(null,null,window.location.href);
+                    }
+                </script>";
+                echo "<div class='alert alert-danger'>Error al actualizar</div>";
+            }
+        }
+    }
 }
 ?>

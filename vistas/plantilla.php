@@ -108,7 +108,7 @@ session_start();
             <?php
             if (isset($_GET["pagina"])) {
 
-                if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "registro" || $_GET["pagina"] == "login" || $_GET["pagina"] == "salir") {
+                if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "registro" || $_GET["pagina"] == "login" || $_GET["pagina"] == "editar" || $_GET["pagina"] == "salir" ) {
                     include "paginas/" . $_GET["pagina"] . ".php";
 
                 }else{
