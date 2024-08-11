@@ -44,20 +44,7 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
                                 <?php
                                 $eliminar = new ControladorFormularios();
                                 $eliminar -> CTReliminar();
-                                if ($eliminar == "ok") {
-                                    echo "<script>
-                                        if(window.history.replaceState){
-                                            window.history.replaceState(null,null,window.location.href);
-                                        }
-                                    </script>";
-                                    echo "<div class='alert alert-success'>Eliminado exitosamente</div>
-                                    <script>
-                                        setTimeout(function(){
-                                            window.location = 'index.php?pagina=inicio';
-                                        }, 3000);
-                                    </script>
-                                    ";
-                                }
+                                
                                 ?>
                             </form>
 

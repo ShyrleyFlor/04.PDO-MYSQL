@@ -87,7 +87,20 @@ class ControladorFormularios
             $tabla = "registros";
             $datos = $_POST["eliminar"];
             $respuesta = ModeloFormularios::mdlEliminarRegistro($tabla, $datos);
-            return $respuesta;
+            if ($respuesta == "ok") {
+                echo "<script>
+                    if(window.history.replaceState){
+                        window.history.replaceState(null,null,window.location.href);
+                    }
+                </script>";
+                echo "
+                <script>
+                    setTimeout(function(){
+                        window.location = 'index.php?pagina=inicio';
+                    }, 3000);
+                </script>
+                ";
+            }
         }
     }
 
