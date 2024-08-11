@@ -5,7 +5,7 @@ class ModeloFormularios
 {
     static public function mdlRegistro($tabla, $datos)
     {
-        echo "Valor de email: " . $datos["email"] . "\n";
+        //echo "Valor de email: " . $datos["email"] . "\n";
         $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (nombre ,email, password) VALUES (:nombre, :email, :password)");
         $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
@@ -42,12 +42,24 @@ class ModeloFormularios
     #actualizar registro
     static public function mdlActualizar($tabla, $datos)
     {
-        echo "Valor de email: " . $datos["email"] . "\n";
+        //echo "Valor de email: " . $datos["email"] . "\n";
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre=:nombre, email=:email, password=:password WHERE id=:id");
         $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
         $stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
         $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            print_r(Conexion::conectar()->errorInfo());
+        }
+    }
+
+    #Eliminar registro
+    static public function mdlEliminarRegistro($tabla, $id)
+    {
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         if ($stmt->execute()) {
             return "ok";
         } else {

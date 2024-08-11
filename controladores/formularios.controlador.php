@@ -43,7 +43,8 @@ class ControladorFormularios
                     }
                     window.location = 'index.php?pagina=inicio';
                 </script>";
-                echo "<div class='alert alert-success'>Ingreso exitoso</div>";
+                echo "<div class='alert alert-success'>Ingreso exitoso</div>
+                ";
             } else {
                 echo "<script>
                     if(window.history.replaceState){
@@ -57,7 +58,7 @@ class ControladorFormularios
 
     #actualizar registro creamos el metodo
     
-    public function CTRactualizar()
+    static public function CTRactualizar()
     {
         if (isset($_POST["actualizarNombre"])) {
             if($_POST["actualizarPassword"] != ""){
@@ -75,22 +76,20 @@ class ControladorFormularios
             );
 
             $respuesta = ModeloFormularios::mdlActualizar($tabla, $datos);
-            if($respuesta == "ok"){
-                echo "<script>
-                    if(window.history.replaceState){
-                        window.history.replaceState(null,null,window.location.href);
-                    }
-                </script>";
-                echo "<div class='alert alert-success'>Actualizado exitosamente</div>";
-            } else {
-                echo "<script>
-                    if(window.history.replaceState){
-                        window.history.replaceState(null,null,window.location.href);
-                    }
-                </script>";
-                echo "<div class='alert alert-danger'>Error al actualizar</div>";
-            }
+            return $respuesta;
         }
     }
+
+    #eliminar registro sera no statico
+    public function CTReliminar()
+    {
+        if (isset($_POST["eliminar"])) {
+            $tabla = "registros";
+            $datos = $_POST["eliminar"];
+            $respuesta = ModeloFormularios::mdlEliminarRegistro($tabla, $datos);
+            return $respuesta;
+        }
+    }
+
 }
 ?>

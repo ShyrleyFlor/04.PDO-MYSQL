@@ -4,7 +4,7 @@ if (isset($_GET["id"])) {
     $item = "id";
     $valor = $_GET["id"];
     $usuario = ControladorFormularios::listaregistro($item, $valor);
-    
+
 }
 
 ?>
@@ -19,8 +19,8 @@ if (isset($_GET["id"])) {
                         <i class="fa-solid fa-user"></i>
                     </span>
                 </div>
-                <input type="text" class="form-control" value="<?php echo $usuario["nombre"]; ?>" placeholder="Escriba su nombre" id="nombre"
-                    name="actualizarNombre">
+                <input type="text" class="form-control" value="<?php echo $usuario["nombre"]; ?>"
+                    placeholder="Escriba su nombre" id="nombre" name="actualizarNombre">
             </div>
 
         </div>
@@ -32,8 +32,8 @@ if (isset($_GET["id"])) {
                         <i class="fa-solid fa-envelope"></i>
                     </span>
                 </div>
-                <input type="email" class="form-control" value="<?php echo $usuario["email"]; ?>" placeholder="Escriba su email" id="email"
-                    name="actualizarEmail">
+                <input type="email" class="form-control" value="<?php echo $usuario["email"]; ?>"
+                    placeholder="Escriba su email" id="email" name="actualizarEmail">
             </div>
 
         </div>
@@ -54,10 +54,30 @@ if (isset($_GET["id"])) {
         </div>
 
         <?php
-        $actualizar = new ControladorFormularios();
-        $actualizar -> CTRactualizar();
+        $actualizar = ControladorFormularios::CTRactualizar();
+        if ($actualizar == "ok") {
+            echo "<script>
+                if(window.history.replaceState){
+                    window.history.replaceState(null,null,window.location.href);
+                }
+            </script>";
+            echo "<div class='alert alert-success'>Actualizado exitosamente</div>
+            <script>
+                setTimeout(function(){
+                    window.location = 'index.php?pagina=inicio';
+                }, 3000);
+            </script>
+            ";
+        } else {
+            echo "<script>
+                if(window.history.replaceState){
+                    window.history.replaceState(null,null,window.location.href);
+                }
+            </script>";
+            echo "<div class='alert alert-danger'>Error al actualizar</div>";
+        }
         ?>
-       
+
 
 
         <button type="submit" class="btn btn-primary">Actualizar</button>

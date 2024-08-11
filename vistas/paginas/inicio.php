@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (!isset($_SESSION["validarIngreso"])) {
     echo "<script>window.location = 'index.php?pagina=login';</script>";
     return;
@@ -8,7 +8,6 @@ if (!isset($_SESSION["validarIngreso"])) {
     }
 }
 $usuarios = ControladorFormularios::listaregistro(null, null);
-
 
 ?>
 
@@ -33,9 +32,36 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
                     <td><?php echo $value["fecha"]; ?></td>
                     <td>
                         <div class="btn-group">
-                            <a href="index.php?pagina=editar&id=<?php echo $value["id"]; ?>" class="btn btn-primary"><i
-                                    class="fa-solid fa-pencil"></i></a>
-                            <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <div class="px-1">
+                                <a href="index.php?pagina=editar&id=<?php echo $value["id"]; ?>" class="btn btn-primary"><i
+                                        class="fa-solid fa-pencil"></i></a>
+                            </div>
+
+
+                            <form method="post">
+                                <input type="hidden" name="eliminar" value="<?php echo $value["id"]; ?>">
+                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                <?php
+                                $eliminar = new ControladorFormularios();
+                                $eliminar -> CTReliminar();
+                                if ($eliminar == "ok") {
+                                    echo "<script>
+                                        if(window.history.replaceState){
+                                            window.history.replaceState(null,null,window.location.href);
+                                        }
+                                    </script>";
+                                    echo "<div class='alert alert-success'>Eliminado exitosamente</div>
+                                    <script>
+                                        setTimeout(function(){
+                                            window.location = 'index.php?pagina=inicio';
+                                        }, 3000);
+                                    </script>
+                                    ";
+                                }
+                                ?>
+                            </form>
+
+
                         </div>
                     </td>
                 </tr>
