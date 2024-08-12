@@ -4,15 +4,26 @@ class ControladorFormularios
     #registro metodo
     static public function ctrRegistros()
     {
+
         if (isset($_POST["registroNombre"])) {
-            $tabla = "registros";
-            $datos = array(
-                "nombre" => $_POST["registroNombre"],
-                "email" => $_POST["registroEmail"],
-                "password" => $_POST["registroPassword"],
-            );
-            $respuesta = ModeloFormularios::mdlRegistro($tabla, $datos);
-            return $respuesta;
+            #validacion de datos
+            if (
+                preg_match("/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]{3,30}$/", $_POST["registroNombre"]) &&
+                preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $_POST["registroEmail"]) &&
+                preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/", $_POST["registroPassword"])
+            ) {
+                $tabla = "registros";
+                $datos = array(
+                    "nombre" => $_POST["registroNombre"],
+                    "email" => $_POST["registroEmail"],
+                    "password" => $_POST["registroPassword"],
+                );
+                $respuesta = ModeloFormularios::mdlRegistro($tabla, $datos);
+                return $respuesta;
+            } else {
+                $respuesta = "error";
+                return $respuesta;
+            }
         }
     }
     #seleccionar registro (listar)
@@ -30,11 +41,11 @@ class ControladorFormularios
             $item = "email";
             $valor = $_POST["ingresoEmail"];
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
-    
+
             echo "Email: " . $_POST["ingresoEmail"] . "<br>";
             echo "Contraseña: " . $_POST["ingresoPassword"] . "<br>";
             echo "Contraseña almacenada: " . $respuesta["password"] . "<br>";
-    
+
             if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"]) {
                 $_SESSION["validarIngreso"] = "ok";
                 echo "<script>
@@ -57,21 +68,21 @@ class ControladorFormularios
     }
 
     #actualizar registro creamos el metodo
-    
+
     static public function CTRactualizar()
     {
         if (isset($_POST["actualizarNombre"])) {
-            if($_POST["actualizarPassword"] != ""){
+            if ($_POST["actualizarPassword"] != "") {
                 $password = $_POST["actualizarPassword"];
-            }else{
+            } else {
                 $password = $_POST["passwordActual"];
             }
 
             $tabla = "registros";
             $datos = array(
                 "id" => $_POST["id"],
-                "nombre" => $_POST["actualizarNombre"], 
-                "email" => $_POST["actualizarEmail"], 
+                "nombre" => $_POST["actualizarNombre"],
+                "email" => $_POST["actualizarEmail"],
                 "password" => $password
             );
 

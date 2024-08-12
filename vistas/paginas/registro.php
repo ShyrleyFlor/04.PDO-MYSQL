@@ -56,6 +56,17 @@
             echo"<div class='alert alert-success'>Registro exitoso</div>";
         }
 
+        if($registro == "error"){
+            #borramos la cache del navegador
+            echo"<script>
+                if(window.history.replaceState){
+                    window.history.replaceState(null,null,window.location.href);
+                }
+            </script>";
+            #mensaje de error
+            echo"<div class='alert alert-danger'>Error, no se permiten caracteres especiales</div>";
+        }
+
         ?>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
