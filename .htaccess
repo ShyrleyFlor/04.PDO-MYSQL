@@ -9,6 +9,12 @@ order allow,deny
 deny from all
 </Files>
 
+#esto es para habilitar SSL una vez comprado
+#RewriteCond %{HTTP_HOST} !^$
+#RewriteCond %{HTTP_HOST} !^www\. [NC]
+#RewriteCond %{HTTPS} !on
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
 # denegar acceso a robots maliciosos, extractores de webs y navegadores offline
 RewriteBase /
 RewriteCond %{HTTP_USER_AGENT} ^Anarchie [OR]
