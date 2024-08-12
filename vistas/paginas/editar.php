@@ -49,6 +49,7 @@ if (isset($_GET["token"])) {
                     name="actualizarPassword">
                 <input type="hidden" value="<?php echo $usuario["password"]; ?>" name="passwordActual">
                 <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="tokenUsuario">
+                <input type="hidden" value="<?php echo $usuario["id"]; ?>" name="idUsuario">
             </div>
 
         </div>

@@ -16,13 +16,13 @@ deny from all
 #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 # denegar acceso a robots maliciosos, extractores de webs y navegadores offline
-RewriteBase /
-RewriteCond %{HTTP_USER_AGENT} ^Anarchie [OR]
-RewriteCond %{HTTP_USER_AGENT} ^ASPSeek [OR]
-RewriteCond %{HTTP_USER_AGENT} ^attach [OR]
-RewriteCond %{HTTP_USER_AGENT} ^autoemailspider [OR]
-RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
-RewriteCond %{HTTP_USER_AGENT} ^Xenu [OR]
-RewriteCond %{HTTP_USER_AGENT} ^Zeus.*Webster [OR]
-RewriteCond %{HTTP_USER_AGENT} ^Zeus
-RewriteRule ^.* - [F,L]
+#RewriteBase /
+#RewriteCond %{HTTP_USER_AGENT} ^Anarchie [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^ASPSeek [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^attach [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^autoemailspider [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Xenu [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Zeus.*Webster [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Zeus
+#RewriteRule ^.* - [F,L]

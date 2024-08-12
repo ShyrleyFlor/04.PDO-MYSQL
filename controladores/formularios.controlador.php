@@ -16,8 +16,8 @@ class ControladorFormularios
                 $tabla = "registros";
                 #Generamos token con md5()
                 $token = md5($_POST["registroNombre"] . "+" . $_POST["registroEmail"]);
-                #encriptar password
-                $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystringforsalt$');
+#encriptar password
+$encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystringforsalt$');
                 $datos = array(
                     "token" => $token,
                     "nombre" => $_POST["registroNombre"],
@@ -47,37 +47,39 @@ class ControladorFormularios
             $item = "email";
             $valor = $_POST["ingresoEmail"];
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
-            $encriptarPassword = crypt($_POST["ngresoPassword"], '$2a$07$usesomesillystringforsalt$');
+            $encriptarPassword = crypt($_POST["ingresoPassword"], '$2a$07$usesomesillystringforsalt$');
+
+            echo $encriptarPassword;
+            echo '<br>';
+            echo $respuesta["password"];
 
             if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $encriptarPassword) {
                 ModeloFormularios::mdlActualizarIntentos($tabla, 0, $respuesta["token"]);
                 $_SESSION["validarIngreso"] = "ok";
                 echo "<script>
-                    if(window.history.replaceState){
-                        window.history.replaceState(null,null,window.location.href);
-                    }
-                    window.location = 'inicio';
-                </script>";
-                echo "<div class='alert alert-success'>Ingreso exitoso</div>
-                ";
+                if(window.history.replaceState){
+                    window.history.replaceState(null,null,window.location.href);
+                }
+                window.location = 'inicio';
+            </script>";
+                echo "<div class='alert alert-success'>Ingreso exitoso</div>";
             } else {
-
                 if ($respuesta["intentos_fallidos"] < 3) {
                     $intentosfallidos = $respuesta["intentos_fallidos"] + 1;
                     ModeloFormularios::mdlActualizarIntentos($tabla, $intentosfallidos, $respuesta["token"]);
-
                 } else {
                     echo '<div class="alert alert-warning">Intentos fallidos maximos alcanzado</div>';
                 }
                 echo "<script>
-                    if(window.history.replaceState){
-                        window.history.replaceState(null,null,window.location.href);
-                    }
-                </script>";
+                if(window.history.replaceState){
+                    window.history.replaceState(null,null,window.location.href);
+                }
+            </script>";
                 echo "<div class='alert alert-danger'>Error al iniciar sesion</div>";
             }
         }
     }
+
 
     #actualizar registro creamos el metodo
 
@@ -96,22 +98,25 @@ class ControladorFormularios
 
                 $compararUsuario = md5($usuario["nombre"] . "+" . $usuario["email"]);
 
-                if ($compararUsuario == $_POST["tokenUsuario"]) {
+                if ($compararUsuario == $_POST["tokenUsuario"] && $_POST["idUsuario"] == $usuario["id"]) {
 
                     if ($_POST["actualizarPassword"] != "") {
                         if (#esto obliga a que el password contenga al menos una letra minúscula, una letra mayúscula, un número y un caracter especial
                             preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{2,30}$/", $_POST["actualizarPassword"])
                         ) {
                             #encriptar password
-    
+
                             $password = crypt($_POST["actualizarPassword"], '$2a$07$usesomesillystringforsalt$');
 
                         }
                     } else {
                         $password = $_POST["passwordActual"];
                     }
+
+                    $actualizar_token = md5($_POST["actualizarNombre"] . "+" . $_POST["actualizarEmail"]);
+
                     $datos = array(
-                        "token" => $_POST["tokenUsuario"],
+                        "token" => $actualizar_token,
                         "nombre" => $_POST["actualizarNombre"],
                         "email" => $_POST["actualizarEmail"],
                         "password" => $password
