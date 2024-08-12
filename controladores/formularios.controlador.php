@@ -16,11 +16,13 @@ class ControladorFormularios
                 $tabla = "registros";
                 #Generamos token con md5()
                 $token = md5($_POST["registroNombre"] . "+" . $_POST["registroEmail"]);
+                #encriptar password
+                $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystringforsalt$');
                 $datos = array(
                     "token" => $token,
                     "nombre" => $_POST["registroNombre"],
                     "email" => $_POST["registroEmail"],
-                    "password" => $_POST["registroPassword"],
+                    "password" => $encriptarPassword,
                 );
                 $respuesta = ModeloFormularios::mdlRegistro($tabla, $datos);
                 return $respuesta;
@@ -45,8 +47,9 @@ class ControladorFormularios
             $item = "email";
             $valor = $_POST["ingresoEmail"];
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
+            $encriptarPassword = crypt($_POST["ngresoPassword"], '$2a$07$usesomesillystringforsalt$');
 
-            if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"]) {
+            if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $encriptarPassword) {
                 ModeloFormularios::mdlActualizarIntentos($tabla, 0, $respuesta["token"]);
                 $_SESSION["validarIngreso"] = "ok";
                 echo "<script>
@@ -63,7 +66,7 @@ class ControladorFormularios
                     $intentosfallidos = $respuesta["intentos_fallidos"] + 1;
                     ModeloFormularios::mdlActualizarIntentos($tabla, $intentosfallidos, $respuesta["token"]);
 
-                }else{
+                } else {
                     echo '<div class="alert alert-warning">Intentos fallidos maximos alcanzado</div>';
                 }
                 echo "<script>
@@ -99,7 +102,10 @@ class ControladorFormularios
                         if (#esto obliga a que el password contenga al menos una letra minúscula, una letra mayúscula, un número y un caracter especial
                             preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{2,30}$/", $_POST["actualizarPassword"])
                         ) {
-                            $password = $_POST["actualizarPassword"];
+                            #encriptar password
+    
+                            $password = crypt($_POST["actualizarPassword"], '$2a$07$usesomesillystringforsalt$');
+
                         }
                     } else {
                         $password = $_POST["passwordActual"];
