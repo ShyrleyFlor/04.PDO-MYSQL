@@ -1,10 +1,10 @@
 <?php
 if (!isset($_SESSION["validarIngreso"])) {
-    echo "<script>window.location = 'index.php?pagina=login';</script>";
+    echo "<script>window.location = 'login';</script>";
     return;
 } else {
     if ($_SESSION["validarIngreso"] != "ok") {
-        echo "<script>window.location = 'index.php?pagina=login';</script>";
+        echo "<script>window.location = 'login';</script>";
     }
 }
 $usuarios = ControladorFormularios::listaregistro(null, null);

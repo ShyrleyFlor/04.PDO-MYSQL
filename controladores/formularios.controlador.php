@@ -56,7 +56,7 @@ class ControladorFormularios
                     if(window.history.replaceState){
                         window.history.replaceState(null,null,window.location.href);
                     }
-                    window.location = 'index.php?pagina=inicio';
+                    window.location = 'inicio';
                 </script>";
                 echo "<div class='alert alert-success'>Ingreso exitoso</div>
                 ";
@@ -152,7 +152,7 @@ class ControladorFormularios
                     echo "
                 <script>
                     setTimeout(function(){
-                        window.location = 'index.php?pagina=inicio';
+                        window.location = 'inicio';
                     }, 3000);
                 </script>
                 ";

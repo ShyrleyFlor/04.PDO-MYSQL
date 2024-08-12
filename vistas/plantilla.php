@@ -43,56 +43,56 @@ session_start();
                 <?php if (isset($_GET["pagina"])): ?>
                     <?php if ($_GET["pagina"] == "registro"): ?>
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php?pagina=registro">Registro</a>
+                            <a class="nav-link active" href="registro">Registro</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pagina=registro">Registro</a>
+                            <a class="nav-link" href="registro">Registro</a>
                         </li>
                     <?php endif ?>
 
                     <?php if ($_GET["pagina"] == "inicio"): ?>
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php?pagina=inicio">Inicio</a>
+                            <a class="nav-link active" href="inicio">Inicio</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pagina=inicio">Inicio</a>
+                            <a class="nav-link" href="inicio">Inicio</a>
                         </li>
                     <?php endif ?>
 
                     <?php if ($_GET["pagina"] == "login"): ?>
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php?pagina=login">Login</a>
+                            <a class="nav-link active" href="login">Login</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pagina=login">Login</a>
+                            <a class="nav-link" href="login">Login</a>
                         </li>
                     <?php endif ?>
 
                     <?php if ($_GET["pagina"] == "salir"): ?>
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php?pagina=salir">Salir</a>
+                            <a class="nav-link active" href="salir">Salir</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pagina=salir">Salir</a>
+                            <a class="nav-link" href="salir">Salir</a>
                         </li>
                     <?php endif ?>
 
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="nav-link " href="index.php?pagina=inicio">Inicio</a>
+                        <a class="nav-link " href="inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php?pagina=registro">Registro</a>
+                        <a class="nav-link active" href="registro">Registro</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?pagina=login">Login</a>
+                        <a class="nav-link" href="login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?pagina=salir">Salir</a>
+                        <a class="nav-link" href="salir">Salir</a>
                     </li>
 
                 <?php endif ?>
