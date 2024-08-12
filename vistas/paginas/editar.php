@@ -1,8 +1,8 @@
 <?php
 
-if (isset($_GET["id"])) {
-    $item = "id";
-    $valor = $_GET["id"];
+if (isset($_GET["token"])) {
+    $item = "token";
+    $valor = $_GET["token"];
     $usuario = ControladorFormularios::listaregistro($item, $valor);
 
 }
@@ -48,7 +48,7 @@ if (isset($_GET["id"])) {
                 <input type="password" class="form-control" placeholder="Escriba su password" id="pwd"
                     name="actualizarPassword">
                 <input type="hidden" value="<?php echo $usuario["password"]; ?>" name="passwordActual">
-                <input type="hidden" value="<?php echo $usuario["id"]; ?>" name="id">
+                <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="tokenUsuario">
             </div>
 
         </div>
@@ -68,13 +68,15 @@ if (isset($_GET["id"])) {
                 }, 3000);
             </script>
             ";
-        } else {
+        } 
+
+        if ($actualizar == "error") {
             echo "<script>
                 if(window.history.replaceState){
                     window.history.replaceState(null,null,window.location.href);
                 }
             </script>";
-            echo "<div class='alert alert-danger'>Error al actualizar</div>";
+            echo "<div class='alert alert-danger'>Error al actualizar usuario</div>";
         }
         ?>
 

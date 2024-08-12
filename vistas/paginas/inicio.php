@@ -33,13 +33,13 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
                     <td>
                         <div class="btn-group">
                             <div class="px-1">
-                                <a href="index.php?pagina=editar&id=<?php echo $value["id"]; ?>" class="btn btn-primary"><i
+                                <a href="index.php?pagina=editar&token=<?php echo $value["token"]; ?>" class="btn btn-primary"><i
                                         class="fa-solid fa-pencil"></i></a>
                             </div>
 
 
                             <form method="post">
-                                <input type="hidden" name="eliminar" value="<?php echo $value["id"]; ?>">
+                                <input type="hidden" name="eliminar" value="<?php echo $value["token"]; ?>">
                                 <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                 <?php
                                 $eliminar = new ControladorFormularios();
