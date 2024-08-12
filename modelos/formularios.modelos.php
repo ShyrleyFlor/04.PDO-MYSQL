@@ -59,6 +59,22 @@ class ModeloFormularios
         ;
     }
 
+    #intentos fallidos
+    static public function mdlActualizarIntentos($tabla, $valor, $token)
+    {
+        //echo "Valor de email: " . $datos["email"] . "\n";
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET intentos_fallidos=:intentos_fallidos WHERE token=:token");
+        $stmt->bindParam(":intentos_fallidos", $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":token", $token, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            print_r(Conexion::conectar()->errorInfo());
+        }
+        ;
+    }
+
     #Eliminar registro
     static public function mdlEliminarRegistro($tabla, $id)
     {

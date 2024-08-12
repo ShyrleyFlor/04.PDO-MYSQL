@@ -46,11 +46,8 @@ class ControladorFormularios
             $valor = $_POST["ingresoEmail"];
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
 
-            echo "Email: " . $_POST["ingresoEmail"] . "<br>";
-            echo "Contraseña: " . $_POST["ingresoPassword"] . "<br>";
-            echo "Contraseña almacenada: " . $respuesta["password"] . "<br>";
-
             if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"]) {
+                ModeloFormularios::mdlActualizarIntentos($tabla, 0, $respuesta["token"]);
                 $_SESSION["validarIngreso"] = "ok";
                 echo "<script>
                     if(window.history.replaceState){
@@ -61,6 +58,14 @@ class ControladorFormularios
                 echo "<div class='alert alert-success'>Ingreso exitoso</div>
                 ";
             } else {
+
+                if ($respuesta["intentos_fallidos"] < 3) {
+                    $intentosfallidos = $respuesta["intentos_fallidos"] + 1;
+                    ModeloFormularios::mdlActualizarIntentos($tabla, $intentosfallidos, $respuesta["token"]);
+
+                }else{
+                    echo '<div class="alert alert-warning">Intentos fallidos maximos alcanzado</div>';
+                }
                 echo "<script>
                     if(window.history.replaceState){
                         window.history.replaceState(null,null,window.location.href);
