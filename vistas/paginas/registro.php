@@ -21,7 +21,7 @@
                         <i class="fa-solid fa-envelope"></i>
                     </span>
                 </div>
-                <input type="email" class="form-control" id="email" name="registroEmail">
+                <input type="email" class="form-control email" id="email" name="registroEmail">
             </div>
 
         </div>
@@ -72,3 +72,5 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </div>
+
+<!-- <script src="C:/xampp/htdocs/cursoPHP/04.PDO-MYSQL/vistas/js/script.js"></script> -->

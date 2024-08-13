@@ -26,8 +26,12 @@ session_start();
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-     <!--Iconos-->
-     <script src="https://kit.fontawesome.com/e8ed0f89d9.js" crossorigin="anonymous"></script>
+    <!--Iconos-->
+    <script src="https://kit.fontawesome.com/e8ed0f89d9.js" crossorigin="anonymous"></script>
+
+    <!-- Incluye jQuery completa en tu HTML -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -108,10 +112,10 @@ session_start();
             <?php
             if (isset($_GET["pagina"])) {
 
-                if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "registro" || $_GET["pagina"] == "login" || $_GET["pagina"] == "editar" || $_GET["pagina"] == "salir" ) {
+                if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "registro" || $_GET["pagina"] == "login" || $_GET["pagina"] == "editar" || $_GET["pagina"] == "salir") {
                     include "paginas/" . $_GET["pagina"] . ".php";
 
-                }else{
+                } else {
                     include "paginas/e  rror404.php";
                 }
 
@@ -122,6 +126,8 @@ session_start();
         </div>
     </div>
 
+    <!-- Elimina o corrige esta línea -->
+    <script  src="vistas/js/script.js"></script>
 
 </body>
 
