@@ -116,6 +116,7 @@ class ControladorFormularios
                     $actualizar_token = md5($_POST["actualizarNombre"] . "+" . $_POST["actualizarEmail"]);
 
                     $datos = array(
+                        "id" => $_POST["idUsuario"],
                         "token" => $actualizar_token,
                         "nombre" => $_POST["actualizarNombre"],
                         "email" => $_POST["actualizarEmail"],
@@ -144,7 +145,7 @@ class ControladorFormularios
 
             $compararUsuario = md5($usuario["nombre"] . "+" . $usuario["email"]);
 
-            if ($compararUsuario != $_POST["eliminar"]) {
+            if ($compararUsuario == $_POST["eliminar"]) {
 
                 $datos = $_POST["eliminar"];
                 $respuesta = ModeloFormularios::mdlEliminarRegistro($tabla, $datos);

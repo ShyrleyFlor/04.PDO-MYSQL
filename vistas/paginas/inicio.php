@@ -42,6 +42,10 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
+                                <?php
+                                    $eliminar = new ControladorFormularios();
+                                    $eliminar->CTReliminar();
+                                ?>
                             </form>
                         </div>
                     </td>
