@@ -7,7 +7,7 @@
                     <i class="fa-solid fa-envelope"></i>
                 </span>
             </div>
-            <input type="email" class="form-control" id="email" name="ingresoEmail">
+            <input type="email" class="form-control" name="ingresoEmail">
         </div>
 
     </div>
@@ -19,7 +19,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </span>
             </div>
-            <input type="password" class="form-control" id="pwd" name="ingresoPassword">
+            <input type="password" class="form-control"  name="ingresoPassword">
         </div>
 
     </div>
