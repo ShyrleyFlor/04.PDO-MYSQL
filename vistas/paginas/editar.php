@@ -20,7 +20,7 @@ if (isset($_GET["token"])) {
                     </span>
                 </div>
                 <input type="text" class="form-control" value="<?php echo $usuario["nombre"]; ?>"
-                    placeholder="Escriba su nombre" id="nombre" name="actualizarNombre">
+                    placeholder="Escriba su nombre" id="actualizarNombre" name="actualizarNombre">
             </div>
 
         </div>
@@ -33,7 +33,7 @@ if (isset($_GET["token"])) {
                     </span>
                 </div>
                 <input type="email" class="form-control" value="<?php echo $usuario["email"]; ?>"
-                    placeholder="Escriba su email" id="email" name="actualizarEmail">
+                    placeholder="Escriba su email" id="actualizarEmail" name="actualizarEmail">
             </div>
 
         </div>
@@ -61,15 +61,19 @@ if (isset($_GET["token"])) {
                 if(window.history.replaceState){
                     window.history.replaceState(null,null,window.location.href);
                 }
+                    
             </script>";
             echo "<div class='alert alert-success'>Actualizado exitosamente</div>
             <script>
                 setTimeout(function(){
                     window.location = 'index.php?pagina=inicio';
                 }, 3000);
+                    
             </script>
             ";
-        } 
+
+
+        }
 
         if ($actualizar == "error") {
             echo "<script>
@@ -80,9 +84,31 @@ if (isset($_GET["token"])) {
             echo "<div class='alert alert-danger'>Error al actualizar usuario</div>";
         }
         ?>
+        <script>
+            var datos = new FormData();
+            datos.append("validarToken","<?php echo $usuario['token']; ?>");
 
+            $.ajax({
+                url: "ajax/formulario.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (response) {
+                    $("#actualizarEmail").val(response.email);
+                    $("#actualizarNombre").val(response.nombre);
+                },
+                error: function (status, error) {
+                    console.error("Error en la solicitud AJAX:", status, error);
+                }
+            })
+
+        </script>
 
 
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
+
 </div>

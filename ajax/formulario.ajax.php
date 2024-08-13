@@ -6,11 +6,34 @@ class AjaxFormularios
 {
 
     public $validarEmail;
+    public $validarToken;
 
     public function ajaxValidarEmail()
     {
         $item = "email";
         $valor = $this->validarEmail;
+
+        // Depuración: Verifica que el valor se reciba correctamente
+        // var_dump($valor);
+
+        $respuesta = ControladorFormularios::listaregistro($item, $valor);
+        // Filtrar la respuesta para que no incluya índices numéricos
+        if (is_array($respuesta)) {
+            $respuesta = array_filter($respuesta, function ($key) {
+                return !is_numeric($key);
+            }, ARRAY_FILTER_USE_KEY);
+        }
+
+        echo json_encode($respuesta);
+        exit();
+
+        // echo var_dump($respuesta);
+    }
+
+    public function ajaxValidarToken()
+    {
+        $item = "token";
+        $valor = $this->validarToken;
 
         // Depuración: Verifica que el valor se reciba correctamente
         // var_dump($valor);
@@ -34,4 +57,10 @@ if (isset($_POST["validarEmail"])) {
     $valEmail = new AjaxFormularios();
     $valEmail->validarEmail = $_POST["validarEmail"];
     $valEmail->ajaxValidarEmail();
+}
+
+if (isset($_POST["validarToken"])) {
+    $valEmail = new AjaxFormularios();
+    $valEmail->validarToken = $_POST["validarToken"];
+    $valEmail->ajaxValidarToken();
 }

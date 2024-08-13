@@ -1,4 +1,4 @@
-$(".email").change(function () {
+$("#email").change(function () {
 
     $(".alert").remove();
     var email = $(this).val();
@@ -13,7 +13,6 @@ $(".email").change(function () {
         contentType: false,
         processData: false,
         dataType: "json",
-        setTimeout: 3000,
         success:function (response) {
             console.log('Respuesta del servidor:', response);
             if (response && response.email) {

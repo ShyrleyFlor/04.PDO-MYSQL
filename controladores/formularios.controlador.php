@@ -10,14 +10,17 @@ class ControladorFormularios
             if (
                 preg_match("/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]{3,30}$/", $_POST["registroNombre"]) &&
                 preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/", $_POST["registroEmail"]) &&
+                
                 #esto obliga a que el password contenga al menos una letra minúscula, una letra mayúscula, un número y un caracter especial
                 preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{2,30}$/", $_POST["registroPassword"])
             ) {
                 $tabla = "registros";
+                
                 #Generamos token con md5()
                 $token = md5($_POST["registroNombre"] . "+" . $_POST["registroEmail"]);
-#encriptar password
-$encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystringforsalt$');
+                
+                #encriptar password
+                $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystringforsalt$');
                 $datos = array(
                     "token" => $token,
                     "nombre" => $_POST["registroNombre"],
@@ -39,6 +42,7 @@ $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystrin
         $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
         return $respuesta;
     }
+    
     #verificar si el usuario existe para permitir iniciar sesion
     public function CTRingreso()
     {
@@ -82,7 +86,6 @@ $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystrin
 
 
     #actualizar registro creamos el metodo
-
     static public function CTRactualizar()
     {
         if (isset($_POST["actualizarNombre"])) {
@@ -101,11 +104,11 @@ $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystrin
                 if ($compararUsuario == $_POST["tokenUsuario"] && $_POST["idUsuario"] == $usuario["id"]) {
 
                     if ($_POST["actualizarPassword"] != "") {
-                        if (#esto obliga a que el password contenga al menos una letra minúscula, una letra mayúscula, un número y un caracter especial
+                        if (
+                            #esto obliga a que el password contenga al menos una letra minúscula, una letra mayúscula, un número y un caracter especial
                             preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{2,30}$/", $_POST["actualizarPassword"])
                         ) {
                             #encriptar password
-
                             $password = crypt($_POST["actualizarPassword"], '$2a$07$usesomesillystringforsalt$');
 
                         }
