@@ -10,15 +10,15 @@ class ControladorFormularios
             if (
                 preg_match("/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]{3,30}$/", $_POST["registroNombre"]) &&
                 preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/", $_POST["registroEmail"]) &&
-                
+
                 #esto obliga a que el password contenga al menos una letra minúscula, una letra mayúscula, un número y un caracter especial
                 preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{2,30}$/", $_POST["registroPassword"])
             ) {
                 $tabla = "registros";
-                
+
                 #Generamos token con md5()
                 $token = md5($_POST["registroNombre"] . "+" . $_POST["registroEmail"]);
-                
+
                 #encriptar password
                 $encriptarPassword = $_POST["registroPassword"];
                 $datos = array(
@@ -42,7 +42,7 @@ class ControladorFormularios
         $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
         return $respuesta;
     }
-    
+
     #verificar si el usuario existe para permitir iniciar sesion
     public function CTRingreso()
     {
@@ -53,9 +53,6 @@ class ControladorFormularios
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
             $encriptarPassword = $_POST["ingresoPassword"];
 
-            echo $encriptarPassword;
-            echo '<br>';
-            echo $respuesta["password"];
 
             if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $encriptarPassword) {
                 ModeloFormularios::mdlActualizarIntentos($tabla, 0, $respuesta["token"]);

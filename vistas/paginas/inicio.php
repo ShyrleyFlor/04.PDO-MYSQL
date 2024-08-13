@@ -33,22 +33,16 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
                     <td>
                         <div class="btn-group">
                             <div class="px-1">
-                                <a href="index.php?pagina=editar&token=<?php echo $value["token"]; ?>" class="btn btn-primary"><i
-                                        class="fa-solid fa-pencil"></i></a>
+                                <a href="index.php?pagina=editar&token=<?php echo $value["token"]; ?>" class="btn btn-primary">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
                             </div>
-
-
-                            <form method="post">
+                            <form method="post" style="display:inline;">
                                 <input type="hidden" name="eliminar" value="<?php echo $value["token"]; ?>">
-                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                <?php
-                                $eliminar = new ControladorFormularios();
-                                $eliminar -> CTReliminar();
-                                
-                                ?>
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </form>
-
-
                         </div>
                     </td>
                 </tr>
