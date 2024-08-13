@@ -26,7 +26,7 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
         <?php if (is_iterable($usuarios)): ?>
             <?php foreach ($usuarios as $key => $value): ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
+                    <td><?php echo ($key + 1); ?></td>
                     <td><?php echo $value["nombre"]; ?></td>
                     <td><?php echo $value["email"]; ?></td>
                     <td><?php echo $value["fecha"]; ?></td>
@@ -37,26 +37,24 @@ $usuarios = ControladorFormularios::listaregistro(null, null);
                                     <i class="fa-solid fa-pencil"></i>
                                 </a>
                             </div>
-                            <form method="post" style="display:inline;">
+                            <form method="post">
                                 <input type="hidden" name="eliminar" value="<?php echo $value["token"]; ?>">
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
-                                <?php
-                                    $eliminar = new ControladorFormularios();
-                                    $eliminar->CTReliminar();
-                                ?>
+
                             </form>
                         </div>
                     </td>
                 </tr>
             <?php endforeach ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="5">No hay usuarios para mostrar.</td>
-            </tr>
         <?php endif ?>
-
-
     </tbody>
+    <?php
+    // Ejecutar la función de eliminación solo si se ha enviado el formulario
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["eliminar"])) {
+        $eliminar = new ControladorFormularios();
+        $eliminar->CTReliminar();
+    }
+    ?>
 </table>

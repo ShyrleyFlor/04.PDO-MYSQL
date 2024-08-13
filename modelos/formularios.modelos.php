@@ -37,7 +37,7 @@ class ModeloFormularios
     #actualizar registro
     static public function mdlActualizar($tabla, $datos)
     {
-        echo "Valor de email: " . $datos["email"] . "\n";
+        //echo "Valor de email: " . $datos["email"] . "\n";
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET token=:token ,nombre=:nombre, email=:email, password=:password WHERE id=:id");
         $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
@@ -69,7 +69,7 @@ class ModeloFormularios
     }
 
     #Eliminar registro
-    static public function mdlEliminarRegistro($tabla, $id)
+    static public function mdlEliminarRegistro($tabla, $token)
     {
         $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE token = :token");
         $stmt->bindParam(":token", $token, PDO::PARAM_STR);
@@ -78,7 +78,6 @@ class ModeloFormularios
         } else {
             print_r(Conexion::conectar()->errorInfo());
         }
-        $stmt->closeCursor();
-        $stmt = null;
+        
     }
 }

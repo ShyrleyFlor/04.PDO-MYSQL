@@ -134,37 +134,41 @@ class ControladorFormularios
     }
 
     #eliminar registro sera no statico
-    public function CTReliminar()
-    {
-        if (isset($_POST["eliminar"])) {
-            $tabla = "registros";
-            $item = "token";
-            $valor = $_POST["tokenUsuario"];
+    public function CTReliminar() {
 
-            $usuario = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
-
-            $compararUsuario = md5($usuario["nombre"] . "+" . $usuario["email"]);
-
-            if ($compararUsuario == $_POST["eliminar"]) {
-
-                $datos = $_POST["eliminar"];
-                $respuesta = ModeloFormularios::mdlEliminarRegistro($tabla, $datos);
-                if ($respuesta == "ok") {
-                    echo "<script>
-                    if(window.history.replaceState){
-                        window.history.replaceState(null,null,window.location.href);
+        if(isset($_POST["eliminar"])) {
+    
+            $usuario = ModeloFormularios::mdlListarRegistros("registros", "token", $_POST["eliminar"]);
+    
+            // Verifica si el usuario existe antes de continuar
+            if($usuario) {
+                $compararToken = md5($usuario["nombre"]."+".$usuario["email"]);
+    
+                if($compararToken == $_POST["eliminar"]) {
+    
+                    $tabla = "registros";
+                    $valor = $_POST["eliminar"];
+    
+                    $respuesta = ModeloFormularios::mdlEliminarRegistro($tabla, $valor);
+    
+                    if($respuesta == "ok") {
+    
+                        echo '<script>
+                                if (window.history.replaceState) {
+                                    window.history.replaceState(null, null, window.location.href);
+                                }
+    
+                                window.location = "inicio";
+                            </script>';
                     }
-                </script>";
-                    echo "
-                <script>
-                    setTimeout(function(){
-                        window.location = 'inicio';
-                    }, 3000);
-                </script>
-                ";
+                } else {
+                    echo "Token no coincide.";
                 }
+            } else {
+                echo "Usuario no encontrado.";
             }
         }
     }
+    
 
 }
