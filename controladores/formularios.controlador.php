@@ -20,7 +20,7 @@ class ControladorFormularios
                 $token = md5($_POST["registroNombre"] . "+" . $_POST["registroEmail"]);
                 
                 #encriptar password
-                $encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$usesomesillystringforsalt$');
+                $encriptarPassword = $_POST["registroPassword"];
                 $datos = array(
                     "token" => $token,
                     "nombre" => $_POST["registroNombre"],
@@ -109,7 +109,7 @@ class ControladorFormularios
                             preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{2,30}$/", $_POST["actualizarPassword"])
                         ) {
                             #encriptar password
-                            $password = crypt($_POST["actualizarPassword"], '$2a$07$usesomesillystringforsalt$');
+                            $password = $_POST["actualizarPassword"];
 
                         }
                     } else {
