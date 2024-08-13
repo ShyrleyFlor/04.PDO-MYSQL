@@ -51,7 +51,7 @@ class ControladorFormularios
             $item = "email";
             $valor = $_POST["ingresoEmail"];
             $respuesta = ModeloFormularios::mdlListarRegistros($tabla, $item, $valor);
-            $encriptarPassword = crypt($_POST["ingresoPassword"], '$2a$07$usesomesillystringforsalt$');
+            $encriptarPassword = $_POST["ingresoPassword"];
 
             echo $encriptarPassword;
             echo '<br>';
